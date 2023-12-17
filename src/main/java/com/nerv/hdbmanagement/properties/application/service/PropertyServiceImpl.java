@@ -42,6 +42,21 @@ public class PropertyServiceImpl implements PropertyService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
+        property.setTotalDwellingUnits(
+                property.getNumberOneRoomSoldFlats() +
+                property.getNumberTwoRoomSoldFlats() +
+                property.getNumberThreeRoomSoldFlats() +
+                property.getNumberFourRoomSoldFlats() +
+                property.getNumberFiveRoomSoldFlats() +
+                property.getNumberExecutiveSoldFlats() +
+                property.getNumberMultiGenerationSoldFlats() +
+                property.getNumberStudioApartmentSoldFlats() +
+                property.getNumberOneRoomRentalFlats() +
+                property.getNumberTwoRoomRentalFlats() +
+                property.getNumberThreeRoomRentalFlats() +
+                property.getNumberOtherRoomRentalFlats()
+        );
+
         return propertyRepository.save(property);
     }
 
