@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -111,6 +112,7 @@ public class PropertyServiceImpl implements PropertyService {
         CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/HDBPropertyInformation.csv"));
         String[] line;
         reader.readNext();
+        List<Property> properties = new ArrayList<>();
         while ((line = reader.readNext()) != null) {
 
             Property property = new Property();
@@ -139,8 +141,8 @@ public class PropertyServiceImpl implements PropertyService {
             property.setNumberThreeRoomRentalFlats(Integer.parseInt(line[22]));
             property.setNumberOtherRoomRentalFlats(Integer.parseInt(line[23]));
 
-            propertyRepository.save(property);
+            properties.add(property);
         }
-
+        propertyRepository.saveAll(properties);
     }
 }
