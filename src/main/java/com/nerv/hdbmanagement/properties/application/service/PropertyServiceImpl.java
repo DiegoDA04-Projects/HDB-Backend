@@ -5,11 +5,16 @@ import com.nerv.hdbmanagement.properties.domain.service.PropertyService;
 import com.nerv.hdbmanagement.properties.infrastructure.persistence.jpa.repositories.PropertyRepository;
 import com.nerv.hdbmanagement.shared.domain.exception.ResourceNotFoundException;
 import com.nerv.hdbmanagement.shared.domain.exception.ResourceValidationException;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -90,5 +95,44 @@ public class PropertyServiceImpl implements PropertyService {
                     propertyRepository.delete(property);
                     return ResponseEntity.ok().build();})
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, propertyId));
+    }
+
+    @Override
+    public void seed() throws IOException, CsvValidationException {
+
+        CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/HDBPropertyInformation.csv"));
+        String[] line;
+        reader.readNext();
+        while ((line = reader.readNext()) != null) {
+
+            Property property = new Property();
+            property.setBlockNumber(line[0]);
+            property.setStreet(line[1]);
+            property.setMaximumFloorLevel(Integer.parseInt(line[2]));
+            property.setYearCompleted(Integer.parseInt(line[3]));
+            property.setResidentialPropertyTag(line[4]);
+            property.setCommercialPropertyTag(line[5]);
+            property.setMarketAndHawkerTag(line[6]);
+            property.setMiscellaneous(line[7]);
+            property.setMultiStoreyCarParkTag(line[8]);
+            property.setPrecinctPavilionTag(line[9]);
+            property.setTown(line[10]);
+            property.setTotalDwellingUnits(Integer.parseInt(line[11]));
+            property.setNumberOneRoomSoldFlats(Integer.parseInt(line[12]));
+            property.setNumberTwoRoomSoldFlats(Integer.parseInt(line[13]));
+            property.setNumberThreeRoomSoldFlats(Integer.parseInt(line[14]));
+            property.setNumberFourRoomSoldFlats(Integer.parseInt(line[15]));
+            property.setNumberFiveRoomSoldFlats(Integer.parseInt(line[16]));
+            property.setNumberExecutiveSoldFlats(Integer.parseInt(line[17]));
+            property.setNumberMultiGenerationSoldFlats(Integer.parseInt(line[18]));
+            property.setNumberStudioApartmentSoldFlats(Integer.parseInt(line[19]));
+            property.setNumberOneRoomRentalFlats(Integer.parseInt(line[20]));
+            property.setNumberTwoRoomRentalFlats(Integer.parseInt(line[21]));
+            property.setNumberThreeRoomRentalFlats(Integer.parseInt(line[22]));
+            property.setNumberOtherRoomRentalFlats(Integer.parseInt(line[23]));
+
+            propertyRepository.save(property);
+        }
+
     }
 }
