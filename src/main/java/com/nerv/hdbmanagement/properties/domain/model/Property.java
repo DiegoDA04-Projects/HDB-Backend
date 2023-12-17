@@ -94,7 +94,7 @@ public class Property {
     private int numberMultiGenerationSoldFlats;
 
     @PositiveOrZero
-    @Column(name = "studio_aparment_sold", nullable = false)
+    @Column(name = "studio_apartment_sold", nullable = false)
     private int numberStudioApartmentSoldFlats;
 
     @PositiveOrZero
