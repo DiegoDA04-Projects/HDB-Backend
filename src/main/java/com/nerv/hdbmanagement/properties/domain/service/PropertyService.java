@@ -11,4 +11,5 @@ public interface PropertyService {
     Property getById(Long propertyId);
     Property update(Long propertyId, Property property);
     ResponseEntity<?> delete(Long propertyId);
+    void seed();
 }
