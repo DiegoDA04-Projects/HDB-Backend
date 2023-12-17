@@ -9,6 +9,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +47,11 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List<Property> getAll() {
         return propertyRepository.findAll();
+    }
+
+    @Override
+    public Page<Property> getAll(Pageable pageable) {
+        return propertyRepository.findAll(pageable);
     }
 
     @Override

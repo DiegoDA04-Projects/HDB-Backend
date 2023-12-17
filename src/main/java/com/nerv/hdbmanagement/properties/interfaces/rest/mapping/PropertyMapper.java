@@ -30,7 +30,7 @@ public class PropertyMapper implements Serializable {
         return mapper.map(resource, Property.class);
     }
 
-    public Page<PropertyResource> modelListPage(List<Property> modelList, Pageable pageable) {
-        return new PageImpl<>(mapper.mapList(modelList, PropertyResource.class), pageable, modelList.size());
+    public Page<PropertyResource> modelListPage(Page<Property> modelList) {
+        return modelList.map(this::toResource);
     }
 }

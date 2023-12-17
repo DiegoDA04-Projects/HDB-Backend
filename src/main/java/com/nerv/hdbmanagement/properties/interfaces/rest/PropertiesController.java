@@ -5,7 +5,7 @@ import com.nerv.hdbmanagement.properties.interfaces.rest.mapping.PropertyMapper;
 import com.nerv.hdbmanagement.properties.interfaces.rest.resources.CreatePropertyResource;
 import com.nerv.hdbmanagement.properties.interfaces.rest.resources.PropertyResource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,10 @@ public class PropertiesController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PropertyResource>> getAllProperties(Pageable pageable) {
-        return new ResponseEntity<>(mapper.modelListPage(propertyService.getAll(), pageable), HttpStatus.OK);
+    public ResponseEntity<Page<PropertyResource>> getAllProperties(@RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "10") int size) {
+
+        return new ResponseEntity<>(mapper.modelListPage(propertyService.getAll(PageRequest.of(page, size))), HttpStatus.OK);
     }
 
     @GetMapping("{propertyId}")
