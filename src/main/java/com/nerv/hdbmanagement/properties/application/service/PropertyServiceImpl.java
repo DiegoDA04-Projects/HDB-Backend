@@ -96,6 +96,7 @@ public class PropertyServiceImpl implements PropertyService {
                                         .withNumberStudioApartmentSoldFlats(property.getNumberStudioApartmentSoldFlats())
                                         .withMultiStoreyCarParkTag(property.getMultiStoreyCarParkTag())
                                         .withMiscellaneous(property.getMiscellaneous())
+                                        .withTotalDwellingUnits(property.updateTotalDwellingUnits())
                                         .withCommercialPropertyTag(property.getCommercialPropertyTag())
                                         .withMarketAndHawkerTag(property.getMarketAndHawkerTag())
                                         .withMaximumFloorLevel(property.getMaximumFloorLevel())

@@ -112,4 +112,19 @@ public class Property {
     @PositiveOrZero
     @Column(name = "other_room_rental", nullable = false)
     private int numberOtherRoomRentalFlats;
+
+    public int updateTotalDwellingUnits() {
+        return this.numberOneRoomSoldFlats +
+                this.numberTwoRoomSoldFlats +
+                this.numberThreeRoomSoldFlats +
+                this.numberFourRoomSoldFlats +
+                this.numberFiveRoomSoldFlats +
+                this.numberExecutiveSoldFlats +
+                this.numberMultiGenerationSoldFlats +
+                this.numberStudioApartmentSoldFlats +
+                this.numberOneRoomRentalFlats +
+                this.numberTwoRoomRentalFlats +
+                this.numberThreeRoomRentalFlats +
+                this.numberOtherRoomRentalFlats;
+    }
 }
