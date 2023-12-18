@@ -9,6 +9,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class PropertyServiceImpl implements PropertyService {
 
     private static final String ENTITY = "Property";
@@ -83,31 +85,33 @@ public class PropertyServiceImpl implements PropertyService {
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
+        log.info("PropertyServiceImpl.update: propertyId = " + propertyId + ", property = " + property.getStreet());
+
         return propertyRepository.findById(propertyId).map(propertyToUpdate ->
                         propertyRepository.save(
-                                propertyToUpdate.withBlockNumber(propertyToUpdate.getBlockNumber())
-                                        .withYearCompleted(propertyToUpdate.getYearCompleted())
-                                        .withTown(propertyToUpdate.getTown())
-                                        .withStreet(propertyToUpdate.getStreet())
-                                        .withNumberStudioApartmentSoldFlats(propertyToUpdate.getNumberStudioApartmentSoldFlats())
-                                        .withMultiStoreyCarParkTag(propertyToUpdate.getMultiStoreyCarParkTag())
-                                        .withMiscellaneous(propertyToUpdate.getMiscellaneous())
-                                        .withCommercialPropertyTag(propertyToUpdate.getCommercialPropertyTag())
-                                        .withMarketAndHawkerTag(propertyToUpdate.getMarketAndHawkerTag())
-                                        .withMaximumFloorLevel(propertyToUpdate.getMaximumFloorLevel())
-                                        .withNumberExecutiveSoldFlats(propertyToUpdate.getNumberExecutiveSoldFlats())
-                                        .withNumberMultiGenerationSoldFlats(propertyToUpdate.getNumberMultiGenerationSoldFlats())
-                                        .withResidentialPropertyTag(propertyToUpdate.getResidentialPropertyTag())
-                                        .withPrecinctPavilionTag(propertyToUpdate.getPrecinctPavilionTag())
-                                        .withNumberTwoRoomSoldFlats(propertyToUpdate.getNumberTwoRoomSoldFlats())
-                                        .withNumberThreeRoomSoldFlats(propertyToUpdate.getNumberThreeRoomSoldFlats())
-                                        .withNumberFourRoomSoldFlats(propertyToUpdate.getNumberFourRoomSoldFlats())
-                                        .withNumberFiveRoomSoldFlats(propertyToUpdate.getNumberFiveRoomSoldFlats())
-                                        .withNumberOneRoomSoldFlats(propertyToUpdate.getNumberOneRoomSoldFlats())
-                                        .withNumberOneRoomRentalFlats(propertyToUpdate.getNumberOneRoomRentalFlats())
-                                        .withNumberTwoRoomRentalFlats(propertyToUpdate.getNumberTwoRoomRentalFlats())
-                                        .withNumberThreeRoomRentalFlats(propertyToUpdate.getNumberThreeRoomRentalFlats())
-                                        .withNumberOtherRoomRentalFlats(propertyToUpdate.getNumberOtherRoomRentalFlats())
+                                propertyToUpdate.withBlockNumber(property.getBlockNumber())
+                                        .withYearCompleted(property.getYearCompleted())
+                                        .withTown(property.getTown())
+                                        .withStreet(property.getStreet())
+                                        .withNumberStudioApartmentSoldFlats(property.getNumberStudioApartmentSoldFlats())
+                                        .withMultiStoreyCarParkTag(property.getMultiStoreyCarParkTag())
+                                        .withMiscellaneous(property.getMiscellaneous())
+                                        .withCommercialPropertyTag(property.getCommercialPropertyTag())
+                                        .withMarketAndHawkerTag(property.getMarketAndHawkerTag())
+                                        .withMaximumFloorLevel(property.getMaximumFloorLevel())
+                                        .withNumberExecutiveSoldFlats(property.getNumberExecutiveSoldFlats())
+                                        .withNumberMultiGenerationSoldFlats(property.getNumberMultiGenerationSoldFlats())
+                                        .withResidentialPropertyTag(property.getResidentialPropertyTag())
+                                        .withPrecinctPavilionTag(property.getPrecinctPavilionTag())
+                                        .withNumberTwoRoomSoldFlats(property.getNumberTwoRoomSoldFlats())
+                                        .withNumberThreeRoomSoldFlats(property.getNumberThreeRoomSoldFlats())
+                                        .withNumberFourRoomSoldFlats(property.getNumberFourRoomSoldFlats())
+                                        .withNumberFiveRoomSoldFlats(property.getNumberFiveRoomSoldFlats())
+                                        .withNumberOneRoomSoldFlats(property.getNumberOneRoomSoldFlats())
+                                        .withNumberOneRoomRentalFlats(property.getNumberOneRoomRentalFlats())
+                                        .withNumberTwoRoomRentalFlats(property.getNumberTwoRoomRentalFlats())
+                                        .withNumberThreeRoomRentalFlats(property.getNumberThreeRoomRentalFlats())
+                                        .withNumberOtherRoomRentalFlats(property.getNumberOtherRoomRentalFlats())
                 ))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, propertyId));
 

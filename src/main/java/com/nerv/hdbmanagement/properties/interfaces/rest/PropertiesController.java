@@ -4,6 +4,7 @@ import com.nerv.hdbmanagement.properties.domain.service.PropertyService;
 import com.nerv.hdbmanagement.properties.interfaces.rest.mapping.PropertyMapper;
 import com.nerv.hdbmanagement.properties.interfaces.rest.resources.CreatePropertyResource;
 import com.nerv.hdbmanagement.properties.interfaces.rest.resources.PropertyResource;
+import com.nerv.hdbmanagement.properties.interfaces.rest.resources.UpdatePropertyResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
@@ -29,9 +30,9 @@ public class PropertiesController {
     @GetMapping
     @Operation(summary = "Get all properties")
     public ResponseEntity<Page<PropertyResource>> getAllProperties(@RequestParam(defaultValue = "0") int page,
-                                                                   @RequestParam(defaultValue = "10") int size) {
+                                                                   @RequestParam(defaultValue = "1000") int size) {
 
-        return new ResponseEntity<>(mapper.modelListPage(propertyService.getAll(PageRequest.of(page, size))), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.modelListPage(propertyService.getAll(PageRequest.of(page, Integer.MAX_VALUE))), HttpStatus.OK);
     }
 
     @GetMapping("{propertyId}")
@@ -48,7 +49,7 @@ public class PropertiesController {
 
     @PutMapping("{propertyId}")
     @Operation(summary = "Update property")
-    public ResponseEntity<PropertyResource> updateProperty(@PathVariable Long propertyId, @RequestBody CreatePropertyResource resource) {
+    public ResponseEntity<PropertyResource> updateProperty(@PathVariable Long propertyId, @RequestBody UpdatePropertyResource resource) {
         return new ResponseEntity<>(mapper.toResource(propertyService.update(propertyId, mapper.toModel(resource))), HttpStatus.OK);
     }
 
